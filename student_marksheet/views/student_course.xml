@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record id="view_student_course_tree" model="ir.ui.view">
+			<field name="name">student.course.tree</field>
+			<field name="model">student.course</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<tree string="Course">
+					<field name="name" />
+					<field name="code" />
+					<field name="section" />
+					<field name="subject_ids" />
+				</tree>
+			</field>
+		</record>
+		<record id="view_student_course_form" model="ir.ui.view">
+			<field name="name">student.course.form</field>
+			<field name="model">student.course</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<form string="Course" version="7.0">
+					<sheet>
+						<separator colspan="4" string="Course Detail" />
+						<group colspan="4">
+							<field name="name" />
+							<field name="code" />
+ 							<field name="section" />
+							
+						</group>
+						<group colspan="4">
+							
+						</group>
+						<group string="Subjects">
+							<field name="subject_ids" nolabel="1"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="view_student_course_search" model="ir.ui.view">
+			<field name="name">student.course.search</field>
+			<field name="model">student.course</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<search string="Course">
+					<field name="name" />
+					<field name="code" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="act_open_student_course_view">
+			<field name="name">Course</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">student.course</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="view_student_course_search" />
+			<field name="domain">[]</field>
+			<field name="context">{}</field>
+		</record>
+		<menuitem action="act_open_student_course_view" id="course_information_menu" name="Course" parent="submenu_course_menu" sequence="6"/>
+	</data>
+</openerp>

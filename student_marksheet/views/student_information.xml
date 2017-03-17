@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<menuitem id="base_menu_student" name="Student Managment" sequence="10"/>
+		<!-- A first level in the left side menu is needed before using action= attribute -->
+		<menuitem id="submenu_student_menu" name="Student Managment" parent="base_menu_student" sequence="1"/>
+		<menuitem id="submenu_teacher_menu" name="Teacher" parent="base_menu_student" sequence="2"/>
+		<menuitem id="submenu_course_menu" name="Course" parent="base_menu_student" sequence="2"/>
+		<record id="student_information_list" model="ir.ui.view">
+			<field name="name">student Information List</field>
+			<field name="model">student.information</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="rollno"/>
+					<field name="email"/>
+					<field name="contact"/>
+					<field name="city"/>
+					<field name="gender"/>
+				</tree>
+			</field>
+		</record>
+		<record id="student_information_form" model="ir.ui.view">
+			<field name="name">Student Information Form</field>
+			<field name="model">student.information</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<field class="oe_left oe_avatar" name="image" widget="image"/>
+						<div class="oe_title">
+							<h1>
+								<field name="rollno" placeholder="Roll No" style="width: 30%%"/>
+							</h1>
+							<h1>
+								<table>
+									<tr>
+										<td>
+											<field name="name" placeholder="First Name" style="padding-right:10px"/>
+										</td>
+										<td>
+											<field name="middle_name" placeholder="Middle Name" style="padding-right:10px"/>
+										</td>
+										<td>
+											<field name="last_name" placeholder="Last Name" style="padding-right:10px"/>
+										</td>
+									</tr>
+								</table>
+							</h1>
+						</div>
+						<separator colspan="4" string="Basic Information"/>
+						<group col="6" colspan="4">
+							<field name="gender"/>
+							<field name="birth_date"/>
+						</group>
+						<notebook colspan="4">
+							<page string="Details">
+								<separator colspan="4" string="Personal Detail"/>
+								<group col="4" colspan="4">
+									<field name="nationality"/>
+									<field name="language"/>
+									<field name="blood_group"/>
+									<field name="contact"/>
+									<field name="email" widget="email"/>
+								</group>
+								<separator colspan="4" string="Address Detail"/>
+								<group>
+									<label for="street" string="Address"/>
+									<div name="div_address">
+										<field name="street1" placeholder="Street..."/>
+										<field name="street2" placeholder="Street2"/>
+										<div class="address_format">
+											<field name="city" placeholder="City" style="width: 40%%"/>
+											<field class="oe_no_button" name="state_id" options="{&quot;no_open&quot;: True}" placeholder="State" style="width: 37%%"/>
+											<field name="zip" placeholder="ZIP" style="width: 20%%"/>
+										</div>
+										<field class="oe_no_button" name="country_id" options="{&quot;no_open&quot;: True}" placeholder="Country"/>
+									</div>
+								</group>
+							</page>
+							<page string="Educational">
+								<separator colspan="4" string="Educational Detail"/>
+								<field name="course_id"/>
+								<group col="4" colspan="4">
+									<field name="course_subject_id" >
+									<tree string="Subject" delete="false" create="false">
+										<field name="name" />
+										<field name="code" />
+										<field name="type" />
+									</tree>
+									</field>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="kanban_view_student" model="ir.ui.view">
+			<field name="name">Student Kanban</field>
+			<field name="model">student.information</field>
+			<field name="arch" type="xml">
+				<kanban class="oe_background_gray">
+					<templates>
+						<t t-name="kanban-box">
+							<div t-attf-class="oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card {{record.group_fancy == 1 ? 'oe_kanban_card_fancy':''}}" >
+							<div t-attf-class="oe_kanban_content">
+								<div class="oe_employee_image">
+									<a type="open">
+										<img class="oe_kanban_avatar pull-left" t-att-src="kanban_image('student.information', 'image', record.id.value)"/>
+										<b><field name="name"/></b>
+										<field name="middle_name"/>
+										<field name="last_name"/>
+									</a>
+								</div>
+								<div class="oe_kanban_details">
+									<ul>
+										<li>Course:
+											<field name="course_id"/></li>
+										<li>Roll Number:
+											<field name="rollno"/></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+		<record id="student_infromation_search" model="ir.ui.view">
+			<field name="name">Student Information Search</field>
+			<field name="model">student.information</field>
+			<field eval="8" name="priority"/>
+			<field name="arch" type="xml">
+				<search string="Student">
+					<field name="name"/>
+					<field name="blood_group"/>
+					<field name="rollno"/>
+					<field name="contact"/>
+					<field name="email"/>
+					<field name="city"/>
+					<field name="gender"/>
+					<newline/>
+					<group expand="0" string="Group By...">
+						<filter context="{'group_by':'blood_group'}" domain="[]" string="Blood Group"/>
+						<filter context="{'group_by':'nationality'}" domain="[]" string="Nationality"/>
+						<filter context="{'group_by':'language'}" domain="[]" string="Language"/>
+						<filter context="{'group_by': 'city'}" name="city" string="City"/>
+						<filter context="{'group_by': 'gender'}" name="gender" string="Gender"/>
+					</group>
+				</search>
+			</field>
+		</record>
+		<record id="student_information_list_action" model="ir.actions.act_window">
+			<field name="name">Student Information</field>
+			<field name="res_model">student.information</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form</field>
+			<field name="view_id" ref="kanban_view_student"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Create the First Student</p>
+			</field>
+		</record>
+		<menuitem action="student_information_list_action" id="student_information_menu" name="Student Information" parent="submenu_student_menu" sequence="1" web_icon="/student_marksheet/static/src/img/student-icon.png"/>
+
+	</data>
+</openerp>

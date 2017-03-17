@@ -1,0 +1,6 @@
+id,name,model_id,perm_create,perm_read,perm_write,perm_unlink,group_id/id
+access_student,student_information,student.information,1,1,1,1,
+access_course,student_course,student.course,1,1,1,1,
+access_subject,student_subject,student.subject,1,1,1,1,
+access_marksheet,student_marksheet,student.marksheet,1,1,1,1,
+access_marksheet_line,student_marksheet_line,student.marksheet.line,1,1,1,1,

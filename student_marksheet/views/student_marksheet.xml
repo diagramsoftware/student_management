@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="student_marksheet_form" model="ir.ui.view">
+			<field name="name">Student Marksheet Form</field>
+			<field name="model">student.marksheet</field>
+			<field name="arch" type="xml">
+				<form string="Student Marksheet">
+					<header class="oe_highlight">
+						
+						<button class="oe_highlight" name="button_confirm" states="draft" string="Confirm Marksheet" type="object"/>
+						<button name="action_marksheet_sent" type="object" states="draft,done,confirm" string="Send by Email" class="oe_highlight"/>
+						<button name="button_cancel" states="draft,confirm" string="Cancel Event" type="object"/>
+						<field name="state" statusbar_visible="draft,confirm,done" widget="statusbar"/>
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<label class="oe_edit_only" for="name" string="Name"/>
+							<h1>
+								<field name="rollno"/>
+							</h1>
+						</div>
+						<notebook>
+							<page string="Student Marksheet">
+								<field name="result">
+									<tree editable="bottom" string="Student Marksheet">
+										<field name="sub_id"/>
+										<field name="outof" sum="Total= Outof"/>
+										<field name="marks" sum="Total Of Marks"/>
+									</tree>
+								</field>
+								<group class="oe_subtotal_footer oe_right">
+									<field name="total"/>
+									<field name="percentage"/>
+									<field name="grade"/>
+								</group>
+								<div class="oe_clear"/>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="student_marksheet_list" model="ir.ui.view">
+			<field name="name">student Marksheet List</field>
+			<field name="model">student.marksheet</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="rollno"/>
+					<field name="total"/>
+					<field name="percentage"/>
+					<field name="grade"/>
+				</tree>
+			</field>
+		</record>
+		<record id="student_marksheet_search" model="ir.ui.view">
+			<field name="name">Student marksheet Search</field>
+			<field name="model">student.marksheet</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="rollno"/>
+					<field name="total"/>
+					<field name="percentage"/>
+					<field name="grade"/>
+				</search>
+			</field>
+		</record>
+		<record id="student_marksheet_list_action" model="ir.actions.act_window">
+			<field name="name">Student Marksheet Action</field>
+			<field name="res_model">student.marksheet</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="student_marksheet_list"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Create the Marksheet Of Student</p>
+			</field>
+		</record>
+		<menuitem action="student_marksheet_list_action" id="student_marksheet_menu" name="Student Marksheet" parent="submenu_teacher_menu" sequence="9"/>
+	</data>
+</openerp>

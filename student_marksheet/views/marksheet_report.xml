@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_student">
+			<t t-call="report.html_container">
+				<t t-as="doc" t-foreach="docs">
+					<t t-call="report.external_layout">
+						<div class="page">
+							<div class="oe_structure"/>
+							<div class="text-center table-responsive">
+								<table class="table table-responsive table-bordered">
+									<thead>
+										<tr>
+											<td><img src="student_marksheet/static/src/img/icon.png" height="50" width="50"/></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Mark Sheet</td>
+										</tr>
+										<tr>
+												<td>Roll No</td>
+												<td>Name</td>
+												<td>Course</td>
+										</tr>
+										<tr>
+											<t t-foreach="doc.rollno" t-as="rollno">
+												<td><span t-esc="rollno.rollno"/></td>
+												<td><span t-esc="rollno.name"/> <span t-esc="rollno.middle_name"/> <span t-esc="rollno.last_name"/></td>
+												<t t-foreach="rollno.course_id" t-as="course">
+													<td><span t-esc="course.name"/></td>
+												</t>
+											</t>
+										</tr>
+										<tr>
+											<th>Subject Code</th>
+											<th>Subject Name</th>
+											<th>Out of</th>
+											<th>Obtained</th>
+										</tr>
+									</thead>
+									<tbody>
+										<t t-foreach="doc.result" t-as="result">
+											<tr>
+											<t t-foreach="result.sub_id" t-as="subject">
+												<td><span t-esc="subject.code"/></td>
+												<td><span t-esc="subject.name"/></td>
+											</t>
+											<td><span t-esc="result.outof"/></td>
+											<td><span t-esc="result.marks"/></td>
+											</tr>
+										</t>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th>Percentage</th>
+											<th>SubTotal</th>
+										</tr>
+										<tr>
+											<td><span t-esc="doc.percentage"/></td>
+											<td><span t-esc="doc.total"/></td>
+										</tr>
+										<tr>
+											<td>Grade</td><td><span t-esc="doc.grade"/></td>
+										</tr>
+										<tr>
+											<td>date</td><td><span t-esc="doc.date"/></td>
+										</tr>
+										<tr><td>Sign Of Principal</td></tr>
+									</tfoot>
+								</table>
+							</div>
+							<div class="oe_structure"/>
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+		<report file="student_marksheet.report_student" id="report_students" model="student.marksheet" name="student_marksheet.report_student" report_type="qweb-pdf" string="Student Report"/>
+	</data>
+</openerp>
