@@ -1,7 +1,7 @@
 {
     'name': 'Student Marksheet',
     'version': '1.0',
-    'author': 'ITROOTS ODOO',
+    'author': 'Kanak Infosystems LLP.',
     'category': 'Odoo Education',
     'icon': "/student_marksheet/static/src/img/icon.png",
     'description':
