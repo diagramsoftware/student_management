@@ -2,9 +2,9 @@
 ##############################################################################
 
 {
-    "name": "Itroots Variant Price",
+    "name": "Variant Price",
     "version": "1.0",
-    "author": "ITROOTS ODOO",
+    "author": "Kanak Infosystems LLP.",
     "website": "",
     "description": """
 Functionalitati:
